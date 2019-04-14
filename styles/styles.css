@@ -4,6 +4,12 @@ body {
   width: 100%;
 }
 
+img {
+  border: none;
+  width: 40px;
+  height: 60px;
+}
+
 #main {
   background-color: black;
   margin: 0 auto;
@@ -15,7 +21,12 @@ div.row {
   display: flex;
 }
 
+.board {
+  margin-top: 20px;
+}
+
 .cell {
+  text-align: center;
   width: 62.5px;
   height: 62.5px;
   transition: 0.25s;
