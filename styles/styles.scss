@@ -20,6 +20,10 @@ div.row{
 .cell{
   width:$cell_size;
   height:$cell_size;
+  transition: .25s;
+}
+.cell:hover {
+  background-color:darkgrey;
 }
 
 .white{

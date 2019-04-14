@@ -18,6 +18,11 @@ div.row {
 .cell {
   width: 62.5px;
   height: 62.5px;
+  transition: 0.25s;
+}
+
+.cell:hover {
+  background-color: darkgrey;
 }
 
 .white {
