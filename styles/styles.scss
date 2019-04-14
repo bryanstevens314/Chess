@@ -1,6 +1,36 @@
+$board_size: 500px;
 $cell_size: 62.5px;
 $background: #004d00;
 
+@media screen and (max-width:$board_size){
+  $temp_board_size:80vw;
+  #main{
+    width:$temp_board_size;
+    height:$temp_board_size;
+  }
+  .cell{
+    width:$temp_board_size / 8;
+    height:$temp_board_size / 8;
+  }
+  img{
+    width: $temp_board_size / 8 - 25;
+    height: $temp_board_size / 8;
+  }
+}
+@media screen and (min-width:$board_size+1){
+  #main{
+    width:$board_size;
+    height:$board_size;
+  }
+  .cell{
+    width:$cell_size;
+    height:$cell_size;
+  }
+  img{
+    width: 40px;
+    height: 60px;
+  }
+}
 body{
   background-color:$background;
   margin:0 auto;
@@ -9,15 +39,10 @@ body{
 
 img{
   border:none;
-  width: 40px;
-  height: 60px;
 }
 
 #main{
-  background-color:black;
   margin:0 auto;
-  width:500px;
-  height:500px;
 }
 
 div.row{
@@ -29,10 +54,9 @@ margin-top:20px;
 }
 .cell{
   text-align: center;
-  width:$cell_size;
-  height:$cell_size;
   transition: .25s;
 }
+
 .cell:hover {
   background-color:darkgrey;
 }
