@@ -1,3 +1,4 @@
+// const BlackHorseChessEngine = require('black-horse');
 window.onload = () => {
   const game = new Game;
   game.generateBoard();
@@ -22,6 +23,10 @@ class Game {
       ]
     };
   }
+  getOffset() {
+
+  }
+
   generateBoard() {
     for (let y = 0; y <= 7; y++) {
       const row = document.createElement('div');
@@ -31,20 +36,20 @@ class Game {
         space.addEventListener('mousedown', (event) => {
           const row = event.target.row;
           const column = event.target.column;
-          const currentCell = state.board[row][column];
+          const currentCell = this.state.board[row][column];
           const currentPiece = currentCell[0];
           const playerForCell = currentCell[1];
-          if (playerForCell === state.currentPlayer) {
+          if (playerForCell === this.state.currentPlayer) {
             const currentAttack = pieces[currentPiece].movement[playerForCell];
             for (let i = 0; i <= 7; i++) {
               for (let j = 0; j < 7; j++) {
-                const currentOffset = getOffset({ column, row });
-                const currentBoardPieceForSpace = this.state.board;
+                const movementCenter = [2, 2];
+                const pieceCenter = [column, row];
               }
             }
             console.log(currentAttack);
           }
-        })
+        });
         const img = document.createElement('img');
         img.row = y;
         img.column = x;
