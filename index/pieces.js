@@ -1,4 +1,4 @@
-export default pieces = {
+export default {
   1: {
     name: 'Pawn',
     img: '',
