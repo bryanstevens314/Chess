@@ -2,22 +2,22 @@ $board_size: 500px;
 $cell_size: 62.5px;
 $background: #004d00;
 
-@media screen and (max-width:$board_size){
-  $temp_board_size:80vw;
+@media screen and (max-width:$board_size + 55){
+  $board_size:80vw;
   #main{
-    width:$temp_board_size;
-    height:$temp_board_size;
+    width:$board_size;
+    height:$board_size;
   }
   .cell{
-    width:$temp_board_size / 8;
-    height:$temp_board_size / 8;
+    width:$board_size / 8;
+    height:$board_size / 8;
   }
   img{
-    width: $temp_board_size / 8 - 25;
-    height: $temp_board_size / 8;
+    width: $board_size / 8 - 25;
+    height: $board_size / 8;
   }
 }
-@media screen and (min-width:$board_size+1){
+@media screen and (min-width:$board_size+56){
   #main{
     width:$board_size;
     height:$board_size;
@@ -67,4 +67,7 @@ margin-top:20px;
 
 .black{
   background-color:grey;
+}
+.blue{
+  background-color:blue;
 }

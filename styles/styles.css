@@ -1,4 +1,4 @@
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 555px) {
   #main {
     width: 80vw;
     height: 80vw;
@@ -14,7 +14,7 @@
     height: 10vw;
   }
 }
-@media screen and (min-width: 501px) {
+@media screen and (min-width: 556px) {
   #main {
     width: 500px;
     height: 500px;
@@ -67,6 +67,10 @@ div.row {
 
 .black {
   background-color: grey;
+}
+
+.blue {
+  background-color: blue;
 }
 
 /*# sourceMappingURL=styles.css.map */
