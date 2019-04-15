@@ -80,8 +80,11 @@ class Game {
             const newMoves = movesArr.map(element => {
               const offset = [element[0] - 2, element[1] - 2];
               const newCoord = [column + offset[0], row + offset[1]]
-              this.state.board[newCoord[1]][newCoord[0]] = '-1';
-              return newCoord;
+              if (newCoord[0] >= 0 && newCoord[0] <= 7 && newCoord[1] >= 0 && newCoord[1] <= 7) {
+                this.state.board[newCoord[1]][newCoord[0]] = '-1';
+                return newCoord;
+
+              }
             });
             while (this.board.hasChildNodes()) {
               this.board.removeChild(this.board.firstChild);
