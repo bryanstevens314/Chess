@@ -75,6 +75,7 @@ class Game {
       for (let x = 0; x <= 7; x++) {
         const space = document.createElement('div');
         space.addEventListener('mousedown', (event) => {
+          console.log(this.state.currentPlayer);
           let row = event.target.row;
           let column = event.target.column;
           if (this.state.targetPiece.location.length === 0) {
@@ -113,14 +114,15 @@ class Game {
                   const currPiece = this.state.board[origin[1]][origin[0]];
                   this.state.board[origin[1]][origin[0]] = 0;
                   this.state.board[destination[1]][destination[0]] = currPiece;
-                  this.state.targetPiece = {
-                    location: [],
-                    validMoves: []
-                  };
+                  this.state.currentPlayer === 0 ? this.state.currentPlayer = 1 : this.state.currentPlayer = 0;
                 }
               }
             });
-            this.state.currentPlayer
+
+            this.state.targetPiece = {
+              location: [],
+              validMoves: []
+            };
             while (this.board.hasChildNodes()) {
               this.board.removeChild(this.board.firstChild);
             }
