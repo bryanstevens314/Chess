@@ -14,13 +14,17 @@ class Game {
       board: [
         ['r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'],
         ['p', 'p', 'p', 'p', 'p', 'p', 'p', 'p'],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
+        ['0', '0', '0', '0', '0', '0', '0', '0'],
+        ['0', '0', '0', '0', '0', '0', '0', '0'],
+        ['0', '0', '0', '0', '0', '0', '0', '0'],
+        ['0', '0', '0', '0', '0', '0', '0', '0'],
         ['P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'],
         ['R', 'N', 'B', 'K', 'Q', 'B', 'N', 'R'],
       ],
+      targetPiece: {
+        location: [],
+        validMoves: []
+      },
       //[{*white*} {*black*}]
       castle: [{ kingSide: true, queenSide: true },
       { kingSide: true, queenSide: true }],
@@ -73,19 +77,50 @@ class Game {
         space.addEventListener('mousedown', (event) => {
           let row = event.target.row;
           let column = event.target.column;
-          let movesArr = this.getAvailableMoves(column, row);
-          let currentCell = this.state.board[row][column];
-          let currentPiece = currentCell[0];
-          if (pieces[currentPiece].player === this.state.currentPlayer) {
-            const newMoves = movesArr.map(element => {
-              const offset = [element[0] - 2, element[1] - 2];
-              const newCoord = [column + offset[0], row + offset[1]]
-              if (newCoord[0] >= 0 && newCoord[0] <= 7 && newCoord[1] >= 0 && newCoord[1] <= 7) {
-                this.state.board[newCoord[1]][newCoord[0]] = '-1';
-                return newCoord;
+          if (this.state.targetPiece.location.length === 0) {
+            let movesArr = this.getAvailableMoves(column, row);
+            let currentCell = this.state.board[row][column];
+            let currentPiece = currentCell[0];
+            if (pieces[currentPiece].player === this.state.currentPlayer) {
+              const newMoves = movesArr.map(element => {
+                const offset = [element[0] - 2, element[1] - 2];
+                const newCoord = [column + offset[0], row + offset[1]]
+                if (newCoord[0] >= 0 && newCoord[0] <= 7
+                  && newCoord[1] >= 0 && newCoord[1] <= 7) {
+                  this.state.board[newCoord[1]][newCoord[0]] = '-1';
+                  return newCoord;
+                }
+              });
+              this.state.targetPiece = {
+                location: [column, row],
+                validMoves: newMoves
+              };
+              while (this.board.hasChildNodes()) {
+                this.board.removeChild(this.board.firstChild);
+              }
+              this.generateBoard();
+            }
+          }
+          else {
+            let validMove = false;
 
+            this.state.targetPiece.validMoves.forEach(element => {
+              if (element !== undefined) {
+                let origin = this.state.targetPiece.location;
+                const destination = [column, row];
+                this.state.board[element[1]][element[0]] = 0;
+                if (element[0] === destination[0] && element[1] === destination[1]) {
+                  const currPiece = this.state.board[origin[1]][origin[0]];
+                  this.state.board[origin[1]][origin[0]] = 0;
+                  this.state.board[destination[1]][destination[0]] = currPiece;
+                  this.state.targetPiece = {
+                    location: [],
+                    validMoves: []
+                  };
+                }
               }
             });
+            this.state.currentPlayer
             while (this.board.hasChildNodes()) {
               this.board.removeChild(this.board.firstChild);
             }
@@ -101,7 +136,16 @@ class Game {
           x % 2 ? space.className = 'cell white' : space.className = 'cell black'
           :
           x % 2 ? space.className = 'cell black' : space.className = 'cell white'
-        piece === '-1' && (space.className = 'cell blue')
+
+        if (piece === '-1') {
+          space.className = 'cell blue'
+          //const arr = piece.split('-');
+
+        }
+        // else {
+        // img.setAttribute('src', pieces[piece].img);
+        // }
+
         space.appendChild(img);
         row.appendChild(space);
       }
@@ -124,7 +168,7 @@ const pieces = {
       2: []
     },
   },
-  0: {
+  '0': {
     img: './assets/chess_pieces/blank.PNG',
     movement: {
       1: [],
