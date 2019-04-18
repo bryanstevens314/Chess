@@ -28,7 +28,7 @@ class Game {
       //[{*white*} {*black*}]
       castle: [{ kingSide: true, queenSide: true },
       { kingSide: true, queenSide: true }],
-      kingPosition: [[7, 5], [0, 5]],
+      kingPosition: [[4, 7], [4, 0]],
       enPassant: false,
       fiftyMoveCounter: 0,
       fullmoveCounter: 0,
@@ -88,7 +88,7 @@ class Game {
                 const newCoord = [column + offset[0], row + offset[1]]
                 if (newCoord[0] >= 0 && newCoord[0] <= 7
                   && newCoord[1] >= 0 && newCoord[1] <= 7) {
-                  this.state.board[newCoord[1]][newCoord[0]] = '-1';
+                  this.state.board[newCoord[1]][newCoord[0]] += ',-1';
                   return newCoord;
                 }
               });
@@ -109,12 +109,14 @@ class Game {
               if (element !== undefined) {
                 let origin = this.state.targetPiece.location;
                 const destination = [column, row];
-                this.state.board[element[1]][element[0]] = 0;
                 if (element[0] === destination[0] && element[1] === destination[1]) {
-                  const currPiece = this.state.board[origin[1]][origin[0]];
-                  this.state.board[origin[1]][origin[0]] = 0;
-                  this.state.board[destination[1]][destination[0]] = currPiece;
+                  const currPiece = this.state.board[origin[1]][origin[0]].split(',');
+                  this.state.board[origin[1]][origin[0]] = '0';
+                  this.state.board[destination[1]][destination[0]] = currPiece[0];
                   this.state.currentPlayer === 0 ? this.state.currentPlayer = 1 : this.state.currentPlayer = 0;
+                } else {
+                  const currElement = this.state.board[element[1]][element[0]].split(',');
+                  this.state.board[element[1]][element[0]] = currElement[0];
                 }
               }
             });
@@ -133,16 +135,20 @@ class Game {
         img.row = y;
         img.column = x;
         let piece = this.state.board[y][x];
-        img.setAttribute('src', pieces[piece].img);
         y % 2 ?
           x % 2 ? space.className = 'cell white' : space.className = 'cell black'
           :
           x % 2 ? space.className = 'cell black' : space.className = 'cell white'
 
-        if (piece === '-1') {
-          space.className = 'cell blue'
-          //const arr = piece.split('-');
+        if (piece.includes('-1')) {
 
+          space.className = 'cell blue'
+          const arr = piece.split(',');
+          this.state.board[y][x] = arr[0];
+          img.setAttribute('src', pieces[arr[1]].img);
+        }
+        else {
+          img.setAttribute('src', pieces[piece].img);
         }
         // else {
         // img.setAttribute('src', pieces[piece].img);
